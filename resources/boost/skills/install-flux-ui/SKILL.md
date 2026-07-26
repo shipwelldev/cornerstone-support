@@ -45,13 +45,19 @@ composer require livewire/flux
 
 When Flux is already current, keep its installed constraint and reconcile the remaining setup without reinstalling it. Review every dependency-manifest and lockfile change before continuing; ask before accepting unrelated dependency movement.
 
-For Flux Pro, first confirm `/auth.json` is ignored and add the ignore rule when it is missing. Never request, receive, or expose Flux credentials through chat, command arguments, logs, or source files. Then ask the developer to run this command directly in their own terminal:
+When `livewire/flux-pro` is already installed but either Flux package is behind its current compatible stable release, use the official paired update command:
+
+```shell
+composer update livewire/flux livewire/flux-pro
+```
+
+For a new Flux Pro installation or missing local Pro authentication, first confirm `/auth.json` is ignored and add the ignore rule when it is missing. Never request, receive, or expose Flux credentials through chat, command arguments, logs, or source files. Then ask the developer to run this command directly in their own terminal:
 
 ```shell
 php artisan flux:activate
 ```
 
-Wait for the developer to confirm completion, then inspect only non-secret results. Do not edit CI or deployment configuration; report that those environments need separately provisioned credentials.
+When Pro is already installed and locally authenticated, skip activation. Otherwise wait for the developer to confirm activation, then inspect only non-secret results. Do not edit CI or deployment configuration; report that those environments need separately provisioned credentials.
 
 Do not run `php artisan flux:publish`. Component customization and UI conversion are outside this installation.
 
@@ -86,6 +92,8 @@ php artisan boost:update --discover
 ```
 
 Explain that this lets the developer select Flux's official `fluxui-development` skill and may display other newly discovered package resources. Run it only when the developer accepts the offer.
+
+Discovery is resolved when the developer either declines it or the accepted command completes and its selected resources are recorded.
 
 ## 6. Verify
 

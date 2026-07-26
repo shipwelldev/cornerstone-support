@@ -44,6 +44,9 @@ test('the package exposes the Flux installer through Boost with its complete wor
         ->toContain('composer verify')
         ->toContain('When Flux is absent or behind that release')
         ->toContain('composer require livewire/flux')
+        ->toContain('composer update livewire/flux livewire/flux-pro')
+        ->toContain('For a new Flux Pro installation or missing local Pro authentication')
+        ->toContain('When Pro is already installed and locally authenticated, skip activation')
         ->toContain('@fluxAppearance')
         ->toContain('@fluxScripts')
         ->toContain("@import '../../vendor/livewire/flux/dist/flux.css';")
@@ -58,6 +61,7 @@ test('the package exposes the Flux installer through Boost with its complete wor
         ->toContain('Do not run `php artisan flux:publish`')
         ->toContain('Do not edit CI or deployment configuration')
         ->toContain('keep the partial installation intact')
+        ->toContain('Discovery is resolved when the developer either declines it')
         ->toContain('A precisely reported blocker leaves the installation incomplete.');
 
     expect(mb_strpos($instructions, 'first confirm `/auth.json` is ignored'))
