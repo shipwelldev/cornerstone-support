@@ -2,16 +2,22 @@
 
 declare(strict_types=1);
 
+use Illuminate\Filesystem\Filesystem;
+use Laravel\Boost\Install\ThirdPartyPackage;
+
 test('the package exposes Cornerstone guidance through the Boost package convention', function (): void {
-    $guidelines = dirname(__DIR__, 2) . '/resources/boost/guidelines/core.blade.php';
+    $files = $this->app->make(Filesystem::class);
+    $packagePath = dirname(__DIR__, 2);
+    $installedPackagePath = $this->applicationPath . '/vendor/shipwelldev/cornerstone-support';
+    $files->ensureDirectoryExists(dirname($installedPackagePath));
+    $files->link($packagePath, $installedPackagePath);
+    $files->put($this->applicationPath . '/composer.json', json_encode([
+        'require' => ['shipwelldev/cornerstone-support' => '@dev'],
+    ], JSON_THROW_ON_ERROR));
 
-    expect($guidelines)->toBeFile();
+    $package = ThirdPartyPackage::discover()->get('shipwelldev/cornerstone-support');
 
-    $contents = file_get_contents($guidelines);
-
-    expect($contents)
-        ->toContain('## Agent instructions')
-        ->toContain('## Coding standards')
-        ->toContain('## Skills')
-        ->toContain('## Verification');
+    expect($package)->not->toBeNull()
+        ->and($package->hasGuidelines)->toBeTrue()
+        ->and($package->hasSkills)->toBeFalse();
 });
