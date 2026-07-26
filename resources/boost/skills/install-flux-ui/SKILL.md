@@ -71,7 +71,7 @@ Reconcile each selected layout idempotently:
 - Place `@fluxScripts` before `</body>` once, after the layout's Livewire script directive when one is explicit.
 - Preserve unrelated layout structure and behavior.
 
-Reconcile each CSS entrypoint loaded by a selected layout, using the current paths from the official documentation. For Flux v2 the required declarations are:
+Reconcile each CSS entrypoint loaded by a selected layout, using the current paths from the official documentation. Calculate the relative POSIX import path from each entrypoint's directory to `vendor/livewire/flux/dist/flux.css`; do not copy a path calculated for a different directory. For the conventional `resources/css/app.css` entrypoint, Flux v2 uses:
 
 ```css
 @import 'tailwindcss';
@@ -101,6 +101,12 @@ Confirm the installed package state and inspect the complete diff. Check selecte
 
 ```shell
 php artisan view:cache
+```
+
+Run the frontend build command defined by the application's `package.json`, normally:
+
+```shell
+npm run build
 ```
 
 Run the canonical workflows in order:
