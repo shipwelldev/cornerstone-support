@@ -27,8 +27,15 @@ test('the package exposes Cornerstone guidance through the Boost package convent
         ->and($package->hasSkills)->toBeFalse()
         ->and($guidelines)->toContain('=== shipwelldev/cornerstone-support rules ===')
         ->toContain('Do not edit `AGENTS.md` or `CLAUDE.md` directly.')
-        ->toContain('Follow `CODING_STANDARDS.md`.')
-        ->toContain('Application-owned agent skills belong under `.ai/skills`.')
-        ->toContain('Run `composer fix`')
-        ->toContain('Run `composer verify`');
+        ->toContain('Add or edit a focused source guideline under `.ai/guidelines` instead')
+        ->toContain('Follow `CODING_STANDARDS.md`. It is the authoritative application coding standard and overrides conflicting generic guidance.')
+        ->toContain('Agents cannot weaken Rules, enforcement, analysis, or suppressions.')
+        ->toContain('Agents follow Rules and Guidelines.')
+        ->toContain('A human must explicitly authorize every Guideline override.')
+        ->toContain('Application-owned agent skills belong under `.ai/skills`. Treat this directory as the source of truth')
+        ->toContain('Laravel Boost publishes skills to the appropriate agent-specific paths')
+        ->toContain('Only consider implementation work complete after both canonical workflows pass in this order:')
+        ->toContain('Run `composer fix`, review every correction, and resolve unintended changes.')
+        ->toContain('Run `composer verify` and fix every failing non-correcting gate.')
+        ->toContain('If a later fix changes code, restart verification from `composer fix`.');
 });
