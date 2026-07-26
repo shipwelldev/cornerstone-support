@@ -1,0 +1,23 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Illuminate\Contracts\JsonSchema\JsonSchema;
+use Laravel\Mcp\Request;
+use Laravel\Mcp\Response;
+use Laravel\Mcp\Server\Tool;
+
+class {{ class }} extends Tool
+{
+    public function handle(Request $request): Response
+    {
+        return Response::text('');
+    }
+
+    public function schema(JsonSchema $schema): array
+    {
+        return [];
+    }
+}

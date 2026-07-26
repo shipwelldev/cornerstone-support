@@ -1,0 +1,17 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Laravel\Mcp\Request;
+use Laravel\Mcp\Response;
+use Laravel\Mcp\Server\AppResource;
+
+class {{ class }} extends AppResource
+{
+    public function handle(Request $request): Response
+    {
+        return Response::view('{{ view }}');
+    }
+}

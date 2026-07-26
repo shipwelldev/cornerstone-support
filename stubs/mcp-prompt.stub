@@ -1,0 +1,22 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Laravel\Mcp\Request;
+use Laravel\Mcp\Response;
+use Laravel\Mcp\Server\Prompt;
+
+class {{ class }} extends Prompt
+{
+    public function handle(Request $request): Response
+    {
+        return Response::text('');
+    }
+
+    public function arguments(): array
+    {
+        return [];
+    }
+}

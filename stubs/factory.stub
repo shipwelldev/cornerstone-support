@@ -1,0 +1,18 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ factoryNamespace }};
+
+use {{ namespacedModel }};
+use Illuminate\Database\Eloquent\Factories\Attributes\UseModel;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+#[UseModel({{ model }}::class)]
+class {{ factory }}Factory extends Factory
+{
+    public function definition(): array
+    {
+        return [];
+    }
+}

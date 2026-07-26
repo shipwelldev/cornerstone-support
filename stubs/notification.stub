@@ -1,0 +1,23 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Notification;
+
+class {{ class }} extends Notification
+{
+    use Queueable;
+
+    public function via(object $notifiable): array
+    {
+        return [];
+    }
+
+    public function toArray(object $notifiable): array
+    {
+        return [];
+    }
+}

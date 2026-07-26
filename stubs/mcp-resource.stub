@@ -1,0 +1,17 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Laravel\Mcp\Request;
+use Laravel\Mcp\Response;
+use Laravel\Mcp\Server\Resource;
+
+class {{ class }} extends Resource
+{
+    public function handle(Request $request): Response
+    {
+        return Response::text('');
+    }
+}

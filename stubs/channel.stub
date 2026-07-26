@@ -1,0 +1,16 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use {{ namespacedUserModel }};
+use LogicException;
+
+class {{ class }}
+{
+    public function join({{ userModel }} $user): array|bool
+    {
+        throw new LogicException('Channel authorization must be implemented.');
+    }
+}

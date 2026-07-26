@@ -1,0 +1,11 @@
+<?php
+
+declare(strict_types=1);
+
+use [component];
+use Livewire\Livewire;
+
+test('the component renders', function (): void {
+    Livewire::test([component]::class)
+        ->assertSuccessful();
+});
