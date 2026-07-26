@@ -63,4 +63,15 @@ abstract class TestCase extends Orchestra
 
         $this->assertTrue($process->isSuccessful(), $process->getErrorOutput() . $process->getOutput());
     }
+
+    protected function installSupportPackageFixture(): void
+    {
+        $files = $this->app->make(Filesystem::class);
+        $installedPackagePath = $this->applicationPath . '/vendor/shipwelldev/cornerstone-support';
+        $files->ensureDirectoryExists(dirname($installedPackagePath));
+        $files->link(dirname(__DIR__), $installedPackagePath);
+        $files->put($this->applicationPath . '/composer.json', json_encode([
+            'require' => ['shipwelldev/cornerstone-support' => '@dev'],
+        ], JSON_THROW_ON_ERROR));
+    }
 }

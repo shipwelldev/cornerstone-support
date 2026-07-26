@@ -9,13 +9,7 @@ use Laravel\Boost\Install\ThirdPartyPackage;
 
 test('the package exposes the Flux installer through Boost with its complete workflow', function (): void {
     $files = $this->app->make(Filesystem::class);
-    $packagePath = dirname(__DIR__, 2);
-    $installedPackagePath = $this->applicationPath . '/vendor/shipwelldev/cornerstone-support';
-    $files->ensureDirectoryExists(dirname($installedPackagePath));
-    $files->link($packagePath, $installedPackagePath);
-    $files->put($this->applicationPath . '/composer.json', json_encode([
-        'require' => ['shipwelldev/cornerstone-support' => '@dev'],
-    ], JSON_THROW_ON_ERROR));
+    $this->installSupportPackageFixture();
 
     $config = new GuidelineConfig();
     $config->aiGuidelines = ['shipwelldev/cornerstone-support'];
@@ -34,15 +28,21 @@ test('the package exposes the Flux installer through Boost with its complete wor
 
     expect($instructions)
         ->not->toContain('disable-model-invocation')
-        ->toContain('without converting application UI or publishing package components')
         ->toContain('Treat repeat runs as reconciliation')
+        ->toContain('Read `CODING_STANDARDS.md` and the current official Flux installation documentation')
+        ->toContain('Installed Laravel, Livewire, Tailwind CSS, Flux, and Flux Pro versions')
+        ->toContain('Every first-party Blade layout')
+        ->toContain('Existing Flux directives, Flux CSS imports, dark variants, appearance initialization, and typography configuration')
         ->toContain('If the worktree has any changes')
         ->toContain('If it fails, report the failures and ask whether to proceed')
         ->toContain('wait for explicit approval before changing Laravel, Livewire, Tailwind CSS')
+        ->toContain('Ask the developer to choose Flux Free or Flux Pro')
         ->toContain('When multiple eligible layouts exist')
+        ->toContain('Configure only the selected layouts and their CSS entrypoints')
         ->toContain('ask before replacing or adapting that code')
         ->toContain("Ask whether to adopt Flux's currently recommended Inter font")
         ->toContain('composer verify')
+        ->toContain('When Flux is absent or behind that release')
         ->toContain('composer require livewire/flux')
         ->toContain('@fluxAppearance')
         ->toContain('@fluxScripts')
@@ -52,9 +52,14 @@ test('the package exposes the Flux installer through Boost with its complete wor
         ->toContain('php artisan boost:update --discover')
         ->toContain('php artisan view:cache')
         ->toContain('composer fix')
-        ->toContain('never request, receive, or expose Flux credentials')
+        ->toContain('first confirm `/auth.json` is ignored')
+        ->toContain('Never request, receive, or expose Flux credentials')
         ->toContain('run this command directly in their own terminal')
         ->toContain('Do not run `php artisan flux:publish`')
         ->toContain('Do not edit CI or deployment configuration')
-        ->toContain('Do not roll back or broaden the work without approval');
+        ->toContain('keep the partial installation intact')
+        ->toContain('A precisely reported blocker leaves the installation incomplete.');
+
+    expect(mb_strpos($instructions, 'first confirm `/auth.json` is ignored'))
+        ->toBeLessThan(mb_strpos($instructions, 'php artisan flux:activate'));
 });

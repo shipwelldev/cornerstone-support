@@ -5,7 +5,7 @@ description: Install Flux UI dependencies and framework assets in a Cornerstone 
 
 # Install Flux UI
 
-Install and configure Flux without converting application UI or publishing package components. Treat repeat runs as reconciliation: preserve valid existing setup and add only what is missing.
+Treat repeat runs as reconciliation: preserve valid existing setup and add only what is missing.
 
 ## 1. Establish The Baseline
 
@@ -37,21 +37,21 @@ Choices are resolved when the edition, selected layouts, prerequisite changes, a
 
 ## 3. Install Dependencies
 
-Install the current compatible stable release with the official unpinned command:
+Determine the current compatible stable release from the official documentation and Composer. When Flux is absent or behind that release, install or update it with the official unpinned command:
 
 ```shell
 composer require livewire/flux
 ```
 
-When Flux is already present, keep the compatible installed constraint and reconcile the remaining setup instead of reinstalling it. Review every dependency-manifest and lockfile change before continuing; ask before accepting unrelated dependency movement.
+When Flux is already current, keep its installed constraint and reconcile the remaining setup without reinstalling it. Review every dependency-manifest and lockfile change before continuing; ask before accepting unrelated dependency movement.
 
-For Flux Pro, never request, receive, or expose Flux credentials through chat, command arguments, logs, or source files. Ask the developer to run this command directly in their own terminal:
+For Flux Pro, first confirm `/auth.json` is ignored and add the ignore rule when it is missing. Never request, receive, or expose Flux credentials through chat, command arguments, logs, or source files. Then ask the developer to run this command directly in their own terminal:
 
 ```shell
 php artisan flux:activate
 ```
 
-Wait for the developer to confirm completion, then inspect only non-secret results. Confirm `/auth.json` is ignored before continuing. Do not edit CI or deployment configuration; report that those environments need separately provisioned credentials.
+Wait for the developer to confirm completion, then inspect only non-secret results. Do not edit CI or deployment configuration; report that those environments need separately provisioned credentials.
 
 Do not run `php artisan flux:publish`. Component customization and UI conversion are outside this installation.
 
@@ -104,8 +104,8 @@ composer verify
 
 Review every correction from `composer fix`. If any later repair changes code, restart with `composer fix` before running `composer verify` again.
 
-If targeted checks or final verification fail and cannot be repaired within the agreed installation scope, report introduced failures separately from baseline failures and ask the developer how to proceed. Do not roll back or broaden the work without approval.
+If targeted checks or final verification fail, keep the partial installation intact, report introduced failures separately from baseline failures, and ask the developer how to proceed. Keep repairs within the selected dependencies, layouts, and CSS entrypoints unless the developer approves broader work.
 
 Report the installed edition and versions, configured layouts and CSS entrypoints, appearance and typography choices, Boost discovery outcome, verification result, and any remaining local Pro credential requirements.
 
-Installation is complete only when the targeted checks and both canonical workflows pass, or the developer has chosen how to handle a precise reported blocker.
+Installation is complete only when the targeted checks and both canonical workflows pass. A precisely reported blocker leaves the installation incomplete.
