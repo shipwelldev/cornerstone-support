@@ -24,7 +24,7 @@ test('the package exposes Cornerstone guidance through the Boost package convent
 
     expect($package)->not->toBeNull()
         ->and($package->hasGuidelines)->toBeTrue()
-        ->and($package->hasSkills)->toBeFalse()
+        ->and($package->hasSkills)->toBeTrue()
         ->and($guidelines)->toContain('=== shipwelldev/cornerstone-support rules ===')
         ->toContain('Do not edit `AGENTS.md` or `CLAUDE.md` directly.')
         ->toContain('Add or edit a focused source guideline under `.ai/guidelines` instead')
