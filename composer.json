@@ -1,0 +1,59 @@
+{
+    "$schema": "https://getcomposer.org/schema.json",
+    "name": "shipwelldev/cornerstone-support",
+    "description": "Console generator support for the Cornerstone Laravel starter kit.",
+    "license": "MIT",
+    "type": "library",
+    "require": {
+        "php": "~8.4.0 || ~8.5.0",
+        "laravel/framework": "^13.20",
+        "livewire/livewire": "^4.3"
+    },
+    "require-dev": {
+        "larastan/larastan": "^3.0",
+        "laravel/pint": "^1.27",
+        "orchestra/testbench": "^11.0",
+        "pestphp/pest": "^4.7",
+        "pestphp/pest-plugin-browser": "^4.3",
+        "pestphp/pest-plugin-laravel": "^4.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "ShipWell\\CornerstoneSupport\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ShipWell\\CornerstoneSupport\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ShipWell\\CornerstoneSupport\\CornerstoneSupportServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "analyse": "phpstan analyse --memory-limit=1G",
+        "fix": "pint --format agent",
+        "test": "pest --compact",
+        "verify": [
+            "pint --test --format agent",
+            "@analyse",
+            "@test"
+        ]
+    },
+    "suggest": {
+        "pestphp/pest": "Required to generate and run Pest tests.",
+        "pestphp/pest-plugin-browser": "Required to generate and run Pest browser tests."
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        },
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
