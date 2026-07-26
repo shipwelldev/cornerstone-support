@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use Illuminate\Filesystem\Filesystem;
+use Laravel\Boost\Install\GuidelineComposer;
+use Laravel\Boost\Install\GuidelineConfig;
 use Laravel\Boost\Install\ThirdPartyPackage;
 
 test('the package exposes Cornerstone guidance through the Boost package convention', function (): void {
@@ -16,8 +18,17 @@ test('the package exposes Cornerstone guidance through the Boost package convent
     ], JSON_THROW_ON_ERROR));
 
     $package = ThirdPartyPackage::discover()->get('shipwelldev/cornerstone-support');
+    $config = new GuidelineConfig();
+    $config->aiGuidelines = ['shipwelldev/cornerstone-support'];
+    $guidelines = $this->app->make(GuidelineComposer::class)->config($config)->compose();
 
     expect($package)->not->toBeNull()
         ->and($package->hasGuidelines)->toBeTrue()
-        ->and($package->hasSkills)->toBeFalse();
+        ->and($package->hasSkills)->toBeFalse()
+        ->and($guidelines)->toContain('=== shipwelldev/cornerstone-support rules ===')
+        ->toContain('Do not edit `AGENTS.md` or `CLAUDE.md` directly.')
+        ->toContain('Follow `CODING_STANDARDS.md`.')
+        ->toContain('Application-owned agent skills belong under `.ai/skills`.')
+        ->toContain('Run `composer fix`')
+        ->toContain('Run `composer verify`');
 });
