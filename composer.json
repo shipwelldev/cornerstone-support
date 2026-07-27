@@ -1,9 +1,27 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
     "name": "shipwelldev/cornerstone-support",
-    "description": "Console generator support for the Cornerstone Laravel starter kit.",
-    "license": "MIT",
     "type": "library",
+    "description": "Evolving generators, stubs, standards, and installation guidance for Cornerstone Laravel applications.",
+    "keywords": [
+        "laravel",
+        "livewire",
+        "starter-kit",
+        "code-generation",
+        "developer-tools"
+    ],
+    "homepage": "https://github.com/shipwelldev/cornerstone-support",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ship Well Development",
+            "homepage": "https://shipwell.dev"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/shipwelldev/cornerstone-support/issues",
+        "source": "https://github.com/shipwelldev/cornerstone-support"
+    },
     "require": {
         "php": "~8.4.0 || ~8.5.0",
         "laravel/framework": "^13.20",
@@ -46,8 +64,10 @@
         ]
     },
     "suggest": {
+        "laravel/boost": "Required to discover and publish the package's agent guidelines and skills.",
         "pestphp/pest": "Required to generate and run Pest tests.",
-        "pestphp/pest-plugin-browser": "Required to generate and run Pest browser tests."
+        "pestphp/pest-plugin-browser": "Required to generate and run Pest browser tests.",
+        "pestphp/pest-plugin-laravel": "Required to run Pest tests in Laravel applications."
     },
     "config": {
         "allow-plugins": {
