@@ -69,3 +69,36 @@ test('the package exposes the Flux installer through Boost with its complete wor
     expect(mb_strpos($instructions, 'first confirm `/auth.json` is ignored'))
         ->toBeLessThan(mb_strpos($instructions, 'php artisan flux:activate'));
 });
+
+test('the package exposes the Filament installer through Boost', function (): void {
+    $files = $this->app->make(Filesystem::class);
+    $this->installSupportPackageFixture();
+
+    $config = new GuidelineConfig();
+    $config->aiGuidelines = ['shipwelldev/cornerstone-support'];
+    $package = ThirdPartyPackage::discover()->get('shipwelldev/cornerstone-support');
+    $skill = $this->app->make(SkillComposer::class)->config($config)->skills()->get('install-filament');
+
+    expect($package)->not->toBeNull()
+        ->and($package->hasSkills)->toBeTrue()
+        ->and($skill)->not->toBeNull()
+        ->and($skill->name)->toBe('install-filament')
+        ->and($skill->package)->toBe('shipwelldev/cornerstone-support')
+        ->and($skill->description)->toContain('Install Filament')
+        ->toContain('panel builder or individual components');
+
+    $instructions = $files->get($skill->path . '/SKILL.md');
+
+    expect($instructions)
+        ->toContain('Treat repeat runs as reconciliation')
+        ->toContain('Ask whether the developer wants the panel builder or individual components')
+        ->toContain('When the panel already exists, preserve and reconcile its provider')
+        ->toContain('Never run `php artisan filament:install --scaffold`')
+        ->toContain('Enable `strictAuthorization()`')
+        ->toContain('concrete `canAccessPanel()` rule')
+        ->toContain('run it directly in their own terminal')
+        ->toContain('Never request, receive, expose, or place those credentials')
+        ->toContain('php artisan boost:update --discover --no-interaction')
+        ->toContain("```shell\ncomposer fix\ncomposer verify\n```")
+        ->toContain('A precisely reported blocker leaves the installation incomplete.');
+});
