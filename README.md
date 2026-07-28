@@ -88,7 +88,7 @@ composer fix
 composer verify
 ```
 
-`composer verify` checks formatting, static analysis, and the complete Pest test suite.
+`composer verify` checks formatting, static analysis, and the complete Pest test suite. Use `composer test -- --tia` to run only tests affected by local changes using the baseline published by CI.
 
 ## License
 
