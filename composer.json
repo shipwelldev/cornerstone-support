@@ -23,6 +23,7 @@
         "source": "https://github.com/shipwelldev/cornerstone-support"
     },
     "require": {
+        "glhd/bits": "^0.6",
         "php": "~8.4.0 || ~8.5.0",
         "laravel/framework": "^13.20",
         "livewire/livewire": "^4.3"

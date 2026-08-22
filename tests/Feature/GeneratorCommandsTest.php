@@ -174,23 +174,32 @@ test('models declare safe metadata and wire optional factories with valid syntax
     $this->artisan('make:model', ['name' => 'Expedition'])->assertSuccessful();
     $this->artisan('make:model', ['name' => 'Mission', '--factory' => true])->assertSuccessful();
     $this->artisan('make:model', ['name' => 'CrewMission', '--factory' => true, '--pivot' => true])->assertSuccessful();
+    $this->artisan('make:model', ['name' => 'Taggable', '--morph-pivot' => true])->assertSuccessful();
 
     $paths = [
-        $this->applicationPath . '/app/Models/Expedition.php',
-        $this->applicationPath . '/app/Models/Mission.php',
-        $this->applicationPath . '/app/Models/CrewMission.php',
-        $this->applicationPath . '/database/factories/MissionFactory.php',
-        $this->applicationPath . '/database/factories/CrewMissionFactory.php',
+        'model' => $this->applicationPath . '/app/Models/Expedition.php',
+        'factory model' => $this->applicationPath . '/app/Models/Mission.php',
+        'pivot model' => $this->applicationPath . '/app/Models/CrewMission.php',
+        'morph pivot model' => $this->applicationPath . '/app/Models/Taggable.php',
+        'factory' => $this->applicationPath . '/database/factories/MissionFactory.php',
+        'pivot factory' => $this->applicationPath . '/database/factories/CrewMissionFactory.php',
     ];
 
     foreach ($paths as $path) {
         $this->assertPhpSyntaxValid($path);
     }
 
-    expect(file_get_contents($paths[0]))->toContain('#[Fillable([])]')->not->toContain('HasFactory')
-        ->and(file_get_contents($paths[1]))->toContain('#[UseFactory(MissionFactory::class)]')->toContain('use HasFactory;')
-        ->and(file_get_contents($paths[3]))->toContain('#[UseModel(Mission::class)]')->not->toContain('/**')
-        ->and(file_get_contents($paths[2]))->toContain('extends Pivot')->toContain('#[UseFactory(CrewMissionFactory::class)]');
+    foreach (['model', 'factory model', 'pivot model', 'morph pivot model'] as $model) {
+        expect(file_get_contents($paths[$model]))
+            ->toContain('use Glhd\Bits\Database\HasSnowflakes;')
+            ->toContain('use HasSnowflakes;');
+    }
+
+    expect(file_get_contents($paths['model']))->toContain('#[Fillable([])]')->not->toContain('HasFactory')
+        ->and(file_get_contents($paths['factory model']))->toContain('#[UseFactory(MissionFactory::class)]')->toContain('use HasFactory;')
+        ->and(file_get_contents($paths['factory']))->toContain('#[UseModel(Mission::class)]')->not->toContain('/**')
+        ->and(file_get_contents($paths['pivot model']))->toContain('extends Pivot')->toContain('#[UseFactory(CrewMissionFactory::class)]')
+        ->and(file_get_contents($paths['morph pivot model']))->toContain('extends MorphPivot');
 });
 
 test('view generation uses Pest for test and pest options and rejects PHPUnit before writing', function (): void {

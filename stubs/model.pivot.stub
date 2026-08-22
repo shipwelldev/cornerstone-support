@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace {{ namespace }};
 
 {{ factoryImport }}
+use Glhd\Bits\Database\HasSnowflakes;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 {{ factoryTraitImport }}
 use Illuminate\Database\Eloquent\Relations\Pivot;
@@ -14,4 +15,5 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 class {{ class }} extends Pivot
 {
     {{ factoryTrait }}
+    use HasSnowflakes;
 }
